@@ -40,11 +40,10 @@ GameOfLife.prototype.setupBoardEvents = function() {
   // EXAMPLE FOR ONE CELL
   // Here is how we would catch a click event on just the 0-0 cell
   // You need to add the click event on EVERY cell on the board
-  
+
+
   var onCellClick = function (e) {
     // coordinates of cell, in case you need them
-    var coord_array = this.id.split('-');
-    var coord_hash = {x: coord_array[0], y: coord_array[1]};
     
     // how to set the style of the cell when it's clicked
     if (this.getAttribute('data-status') == 'dead') {
@@ -55,9 +54,14 @@ GameOfLife.prototype.setupBoardEvents = function() {
       this.setAttribute('data-status', 'dead');
     }
   };
-  
-  var cell00 = document.getElementById('0-0');
-  cell00.onclick = onCellClick;
+    var table = document.getElementById('board');
+    var cells = table.getElementsByTagName('td');
+
+    for(var i =0; i < cells.length; i++) {
+        var id = cells[i].id;
+        var cell = document.getElementById(id);
+        cell.onclick = onCellClick;
+    }
 };
 
 GameOfLife.prototype.step = function () {
@@ -74,5 +78,5 @@ GameOfLife.prototype.enableAutoPlay = function () {
   
 };
 
-var gol = new GameOfLife(20,20);
+var gol = new GameOfLife(10,10);
 gol.createAndShowBoard();
