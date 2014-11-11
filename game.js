@@ -69,6 +69,40 @@ GameOfLife.prototype.step = function () {
   // on the board and determine, based on it's neighbors,
   // whether the cell should be dead or alive in the next
   // evolution of the game
+  console.log("click");
+  var table = document.getElementById('board');
+  var cells = table.getElementsByTagName('td');
+
+  var checkNeighbors = function(id) {
+    var aliveCounter = 0;
+    var idArr = id.split("-");
+    var hash_id = {w: idArr[0], h: idArr[1]};
+// debugger;
+    if(document.getElementById(hash_id.w - 1 + "-" + hash_id.h - 1) !== null) {
+      if(document.getElementById(hash_id.w + 1 + "-" + hash_id.h + 1).getAttribute('data-status') === 'alive') {
+
+      aliveCounter += 3;
+    }
+    }
+    
+   return aliveCounter;
+
+  }
+
+  for(var i =0; i < cells.length; i++) {
+    if(cells[i].getAttribute('data-status') === 'alive') {
+      //if cells[i] has more than three neighbors || has less than two neighbors
+        cells[i].className = "dead";
+        cells[i].setAttribute('data-status', 'alive');
+      
+    } else if(cells[i].getAttribute('data-status') === 'dead'){
+        var id = cells[i].id;
+        if(checkNeighbors(id) === 3) {
+        cells[i].className = "alive";
+        cells[i].setAttribute('data-status', 'alive');
+      }
+    }
+  }
   
 };
 
@@ -80,3 +114,6 @@ GameOfLife.prototype.enableAutoPlay = function () {
 
 var gol = new GameOfLife(10,10);
 gol.createAndShowBoard();
+var onStepClick = document.getElementsByClassName("btn btn-success");
+console.log(onStepClick);
+onStepClick[0].onclick = gol.step;
