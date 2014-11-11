@@ -79,65 +79,85 @@ GameOfLife.prototype.step = function () {
     var hash_id = {w: idArr[0], h: idArr[1]};
     var num_hash_w = parseInt(hash_id.w);
     var num_hash_h = parseInt(hash_id.h);
-    debugger;
+    
     // var otherthing = hash_id.w - 1;
     // console.log(otherthing);
     // var thisthing = document.getElementById((num_hash_w+1) + "-" + (num_hash_h+1));
     // console.log(thisthing);
-      if(document.getElementById((num_hash_w - 1) + "-" + (num_hash_h  - 1)) === undefined) {
-        if(document.getElementById((num_hash_w - 1)) + "-" + (num_hash_h  - 1).getAttribute('data-status') === 'alive') {
+      
+      if(document.getElementById( (num_hash_w - 1) + "-" + (num_hash_h  - 1) ) !== null) {
+        if(document.getElementById( (num_hash_w - 1) + "-" + (num_hash_h  - 1) ).getAttribute('data-status') === 'alive') {
           aliveCounter += 1;
         }
-      } else {
-        var again = document.getElementById((num_hash_w - 1) + "-" + (num_hash_h  - 1));
-        console.log(again);
       }
-      if(document.getElementById((num_hash_w - 1)) + "-" + (num_hash_h  - 1).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w- 1) + "-" + (num_hash_h  - 1)) !== undefined) {
-      
-      } 
-else if(document.getElementById((num_hash_w - 1) + "-" + num_hash_h).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w - 1) + "-" + num_hash_h) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById((num_hash_w - 1) + "-" + (num_hash_h + 1)).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w - 1) + "-" + num_hash_h) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById(num_hash_w + "-" + (num_hash_h - 1)).getAttribute('data-status') === 'alive' && document.getElementById(num_hash_w + "-" + (num_hash_h - 1)) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById(num_hash_w + "-" + (num_hash_h + 1)).getAttribute('data-status') === 'alive' && document.getElementById(num_hash_w + "-" + (num_hash_h + 1)) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h - 1)).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w + 1) + "-" + (num_hash_h - 1)) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById((num_hash_w + 1) + "-" + num_hash_h).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w + 1) + "-" + num_hash_h) !== null) {
-      aliveCounter += 1;
-    }
-    else if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h + 1)).getAttribute('data-status') === 'alive' && document.getElementById((num_hash_w + 1) + "-" + (num_hash_h + 1)) !== null) {
-      aliveCounter += 1;
-    }
+      if(document.getElementById((num_hash_w - 1) + "-" + num_hash_h) !== null) {
+        if(document.getElementById((num_hash_w - 1) + "-" + num_hash_h).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById((num_hash_w - 1) + "-" + (num_hash_h+1)) !== null) {
+        if(document.getElementById((num_hash_w - 1) + "-" + (num_hash_h+1)).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById(num_hash_w + "-" + (num_hash_h-1)) !== null) {
+        if(document.getElementById(num_hash_w + "-" + (num_hash_h-1)).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById(num_hash_w + "-" + (num_hash_h+1)) !== null) {
+        if(document.getElementById(num_hash_w + "-" + (num_hash_h+1)).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h - 1)) !== null) {
+        if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h - 1)).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById((num_hash_w + 1) + "-" + num_hash_h) !== null) {
+        if(document.getElementById((num_hash_w + 1) + "-" + num_hash_h).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
+      if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h + 1)) !== null) {
+        if(document.getElementById((num_hash_w + 1) + "-" + (num_hash_h + 1)).getAttribute('data-status') === 'alive') {
+          aliveCounter += 1;
+        } 
+      }
     
    return aliveCounter;
-
   }
+  var deadArr = [];
+  var aliveArr = [];
   for(var i =0; i < cells.length; i++) {
     var id = cells[i].id;
     // debugger;
     if(cells[i].getAttribute('data-status') === 'alive') {
       //if cells[i] has more than three neighbors || has less than two neighbors
-      if(checkNeighbors(id) > 3 || checkNeighbors(id) < 3) {
+      if(checkNeighbors(id) > 3 || checkNeighbors(id) < 2) {
         console.log("make dead");
-        cells[i].className = "dead";
-        cells[i].setAttribute('data-status', 'alive');
+        deadArr.push(cells[i]);
       }
       
     } else if(cells[i].getAttribute('data-status') === 'dead'){
         if(checkNeighbors(id) === 3) {
-        cells[i].className = "alive";
-        cells[i].setAttribute('data-status', 'alive');
+        console.log("make alive")
+        aliveArr.push(cells[i]);
       }
     }
   }
+  console.log(deadArr);
+  deadArr.forEach(function(cell) {
+    cell.className = "dead";
+    cell.setAttribute('data-status', 'dead');
+  });
+
+  console.log(aliveArr);
+  aliveArr.forEach(function(cell) {
+    cell.className = "alive";
+    cell.setAttribute('data-status', 'alive');
+  });
   
 };
 
@@ -147,7 +167,7 @@ GameOfLife.prototype.enableAutoPlay = function () {
   
 };
 
-var gol = new GameOfLife(5,5);
+var gol = new GameOfLife(20,20);
 gol.createAndShowBoard();
 var onStepClick = document.getElementsByClassName("btn btn-success");
 console.log(onStepClick);
